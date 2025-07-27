@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>R Proqramlaşdırma Kursu - Azərbaycan dilində</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 40px;
+            text-align: center;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+        }
+
+        .header h1 {
+            font-size: 3em;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header p {
+            font-size: 1.3em;
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 15px;
+            background: rgba(102, 126, 234, 0.1);
+            border-radius: 10px;
+            min-width: 120px;
+        }
+
+        .stat-number {
+            font-size: 2em;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .stat-label {
+            font-size: 0.9em;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        .modules-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .module-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .module-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+        }
+
+        .module-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .module-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            font-size: 1.5em;
+            color: white;
+        }
+
+        .module-title {
+            font-size: 1.4em;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+
+        .module-description {
+            color: #666;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+
+        .module-links {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .module-link {
+            display: inline-flex;
+            align-items: center;
+            padding: 8px 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-size: 0.9em;
+            transition: all 0.3s ease;
+            box-shadow: 0 3px 10px rgba(102, 126, 234, 0.3);
+        }
+
+        .module-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .module-link i {
+            margin-right: 8px;
+        }
+
+        .special-module {
+            grid-column: 1 / -1;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+            border: 2px solid rgba(102, 126, 234, 0.3);
+        }
+
+        .footer {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .footer h3 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+
+        .footer p {
+            color: #666;
+            margin-bottom: 10px;
+        }
+
+        .social-links {
+            margin-top: 20px;
+        }
+
+        .social-link {
+            display: inline-block;
+            margin: 0 10px;
+            padding: 10px;
+            background: #667eea;
+            color: white;
+            border-radius: 50%;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .social-link:hover {
+            background: #764ba2;
+            transform: translateY(-3px);
+        }
+
+        .progress-indicator {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            height: 8px;
+            margin-top: 10px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            border-radius: 10px;
+            transition: width 0.3s ease;
+        }
+
+        .beginner { background: linear-gradient(135deg, #2ecc71, #27ae60); }
+        .intermediate { background: linear-gradient(135deg, #f39c12, #e67e22); }
+        .advanced { background: linear-gradient(135deg, #e74c3c, #c0392b); }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2.2em;
+            }
+            
+            .header p {
+                font-size: 1.1em;
+            }
+            
+            .stats {
+                gap: 15px;
+            }
+            
+            .modules-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .module-links {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header Section -->
+        <header class="header">
+            <h1><i class="fab fa-r-project"></i> R Proqramlaşdırma Kursu</h1>
+            <p>Azərbaycan dilində hərtərəfli R proqramlaşdırma təlimi</p>
+            <p><strong>Data Science və Statistik Analiz üçün R Programming</strong></p>
+            
+            <div class="stats">
+                <div class="stat-item">
+                    <div class="stat-number">17</div>
+                    <div class="stat-label">Modul</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">25+</div>
+                    <div class="stat-label">Saat</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">100+</div>
+                    <div class="stat-label">Praktik Tapşırıq</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">AZ</div>
+                    <div class="stat-label">Azərbaycan dilində</div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Modules Grid -->
+        <div class="modules-grid">
+            
+            <!-- Module 1 -->
+            <div class="module-card">
+                <div class="module-header">
+                    <div class="module-icon beginner">
+                        <i class="fas fa-play"></i>
+                    </div>
+                    <div class="module-title">Modul 1: R-ə Giriş</div>
+                </div>
+                <div class="module-description">
+                    R-ın quraşdırılması, RStudio interface-i, əsas konseptlər və ilk addımlar. R proqramlaşdırma dilinə başlanğıc.
+                </div>
+                <div class="progress-indicator">
+                    <div class="progress-bar beginner" style="width: 100%"></div>
+                </div>
+                <div class="module-links">
+                    <a href="Modul-1.html" class="module-link">
+                        <i class="fas fa-book-open"></i> Modulun İçeriği
+                    </a>
+                </div>
+            </div>
+
+            <!-- Module 2 -->
+            <div class="module-card">
+                <div class="module-header">
+                    <div class="module-icon beginner">
+                        <i class="fas fa-database"></i>
+                    </div>
+                    <div class="module-title">Modul 2: Data Types və Structures</div>
+                </div>
+                <div class="module-description">
+                    Vectors, lists, matrices, data frames və R-də məlumat strukturlarının ətraflı öyrənilməsi.
+                </div>
+                <div class="progress-indicator">
+                    <div class="progress-bar beginner" style="width: 100%"></div>
+                </div>
+                <div class="module-links">
+                    <a href="Modul-2.html" class="module-link">
+                        <i class="fas fa-book-open"></i> Modulun İçeriği
+                    </a>
+                </div>
+            </div>
+
+            <!-- Module 3 -->
+            <div class="module-card">
+                <div class="module-header">
+                    <div class="module-icon beginner">
+                        <i class="fas fa-file-import"></i>
+                    </div>
+                    <div class="module-title">Modul 3: Data Import və Export</div>
+                </div>
+                <div class="module-description">
+                    CSV, Excel, JSON fayllarının oxunması və yazılması. Müxtəlif məlumat mənbələri ilə işləmə.
+                </div>
+                <div class="progress-indicator">
+                    <div class="progress-bar beginner" style="width: 100%"></div>
+                </div>
+                <div class="module-links">
+                    <a href="Modul-3.html" class="module-link">
+                        <i class="fas fa-book-open"></i> Modulun İçeriği
+                    </a>
+                </div>
+            </div>
+
+            <!-- Module 4 -->
+            <div class="module-card">
+                <div class="module-header">
+                    <div class="module-icon beginner">
+                        <i class="fas fa-broom"></i>
+                    </div>
+                    <div class="module-title">Modul 4: Data Cleaning və Manipulation</div>
+                </div>
+                <div class="module-description">
+                    Məlumatların təmizlənməsi, çevirməsi və manipulyasiyası. dplyr və tidyr paketləri ilə işləmə.
+                </div>
+                <div class="progress-indicator">
+                    <div class="progress-bar beginner" style="width: 100%"></div>
+                </div>
+                <div class="module-links">
+                    <a href="Modul-4.html" class="module-link">
+                        <i class="fas fa-book-open"></i> Modulun İçeriği
+                    </a>
+                </div>
+            </div>
+
+            <!-- Module 5 -->
+            <div class="module-card">
+                <div class="module-header">
+                    <div class="module-icon intermediate">
+                        <i class="fas fa-chart-bar"></i>
+                    </div>
+                    <div class="module-title">Modul 5: Basic Visualization</div>
+                </div>
+                <div class="module-description">
+                    Base R ilə əsas qrafiklər, plot() funksiyası və vizualizasiyanın fundamental prinsipləri.
+                </div>
+                <div class="progress-indicator">
+                    <div class="progress-bar intermediate" style="width: 100%"></div>
+                </div>
+                <div class="module-links">
+                    <a href="Modul-5.html" class="module-link">
+                        <i class="fas fa-book-open"></i> Modulun İçeriği
+                    </a>
+                </div>
+            </div>
+
+            <!-- Module 6 -->
+            <div class="module-card">
+                <div class="module-header">
+                    <div class="module-icon intermediate">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <div class="module-title">Modul 6: ggplot2 Fundamentals</div>
+                </div>
+                <div class="module-description">
+                    ggplot2 paketinə giriş, grammar of graphics, geoms və aesthetic mappings.
+                </div>
+                <div class="progress-indicator">
+                    <div class="progress-bar intermediate" style="width: 100%"></div>
+                </div>
+                <div class="module-links">
+                    <a href="Modul-6.html" class="module-link">
+                        <i class="fas fa-book-open"></i> Modulun İçeriği
+                    </a>
+                </div>
+            </div>
+
+            <!-- Module 7 -->
+            <div class="module-card">
+                <div class="module-header">
+                    <div class="module-icon intermediate">
+                        <i class="fas fa-calculator"></i>
+                    </div>
+                    <div class="module-title">Modul 7: Descriptive Statistics</div>
+                </div>
+                <div class="module-description">
+                    Təsviri statistika, mərkəzi meyl, dağılım ölçüləri və əsas statistik göstəricilər.
+                </div>
+                <div class="progress-indicator">
+                    <div class="progress-bar intermediate" style="width: 100%"></div>
+                </div>
+                <div class="module-links">
+                    <a href="Modul-7.html" class="module-link">
+                        <i class="fas fa-book-open"></i> Modulun İçeriği
+                    </a>
+                </div>
+            </div>
+
+            <!-- Module 8 -->
+            <div class="module-card">
+                <div class="module-header">
+                    <div class="module-icon intermediate">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    <div class="module-title">Modul 8: Hypothesis Testing</div>
+                </div>
+                <div class="module-description">
+                    Fərziyyə testləri, t-test, chi-square test və statistik əhəmiyyət konseptləri.
+                </div>
+                <div class="progress-indicator">
+                    <div class="progress-bar intermediate" style="width: 100%"></div>
+                </div>
+                <div class="module-links">
+                    <a href="Modul-8.html" class="module-link">
+                        <i class="fas fa-book-open"></i> Modulun İçeriği
+                    </a>
+                </div>
+            </div>
+
+            <!-- Module 9 -->
+            <div class="module-card">
+                <div class="module-header">
+                    <div class="module-icon intermediate">
+                        <i class="fas fa-project-diagram"></i>
+                    </div>
+                    <div class="module-title">Modul 9: Correlation və Regression</div>
+                </div>
+                <div class="module-description">
+                    Korrelyasiya analizi, xətti reqressiya və proqnozlaşdırma modelləri.
+                </div>
+                <div class="progress-indicator">
+                    <div class="progress-bar intermediate" style="width: 100%"></div>
+                </div>
+                <div class="module-links">
+                    <a href="Modul-9.html" class="module-link">
+                        <i class="fas fa-book-open"></i> Modulun İçeriği
+                    </a>
+                </div>
+            </div>
+
+            <!-- Module 10 - Special (Split into 2 parts) -->
+            <div class="module-card special-module">
+                <div class="module-header">
+                    <div class="module-icon advanced">
+                        <i class="fas fa-palette"></i>
+                    </div>
+                    <div class="module-title">Modul 10: Advanced ggplot2 & Themes</div>
+                </div>
+                <div class="module-description">
+                    <strong>Qabaqcıl Vizualizasiya:</strong> Advanced geometries, statistical layers, custom themes və publication-ready graphics. Professional data visualization təknikləri.
+                </div>
+                <div class="progress-indicator">
+                    <div class="progress-bar advanced" style="width: 100%"></div>
+                </div>
+                <div class="module-links">
+                    <a href="Modul-10.1.html" class="module-link">
+                        <i class="fas fa-chart-area"></i> Part 1: Geometries & Aesthetics
+                    </a>
+                    <a href="Modul-10.2.html" class="module-link">
+                        <i class="fas fa-paint-brush"></i> Part 2: Themes & Publication
+                    </a>
+                </div>
+            </div>
+
+            <!-- Module 11 -->
+            <div class="module-card">
+                <div class="module-header">
+                    <div class="module-icon advanced">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <div class="module-title">Modul 11: Programming Concepts</div>
+                </div>
+                <div class="module-description">
+                    Functions, loops, conditional statements və R-də proqramlaşdırma məntiqi.
+                </div>
+                <div class="progress-indicator">
+                    <div class="progress-bar advanced" style="width: 100%"></div>
+                </div>
+                <div class="module-links">
+                    <a href="Modul-11.html" class="module-link">
+                        <i class="fas fa-book-open"></i> Modulun İçeriği
+                    </a>
+                </div>
+            </div>
+
+            <!-- Module 12 -->
+            <div class="module-card">
+                <div class="module-header">
+                    <div class="module-icon advanced">
+                        <i class="fas fa-sitemap"></i>
+                    </div>
+                    <div class="module-title">Modul 12: Advanced Data Manipulation</div>
+                </div>
+                <div class="module-description">
+                    Mürəkkəb məlumat manipulyasiyası, joins, pivoting və advanced dplyr texnikaları.
+                </div>
+                <div class="progress-indicator">
+                    <div class="progress-bar advanced" style="width: 100%"></div>
+                </div>
+                <div class="module-links">
+                    <a href="Modul-12.html" class="module-link">
+                        <i class="fas fa-book-open"></i> Modulun İçeriği
+                    </a>
+                </div>
+            </div>
+
+            <!-- Module 13 -->
+            <div class="module-card">
+                <div class="module-header">
+                    <div class="module-icon advanced">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="module-title">Modul 13: Time Series Analysis</div>
+                </div>
+                <div class="module-description">
+                    Vaxt seriyalarının analizi, trend analizi və zaman əsaslı məlumatlarla işləmə.
+                </div>
+                <div class="progress-indicator">
+                    <div class="progress-bar advanced" style="width: 100%"></div>
+                </div>
+                <div class="module-links">
+                    <a href="Modul-13.html" class="module-link">
+                        <i class="fas fa-book-open"></i> Modulun İçeriği
+                    </a>
+                </div>
+            </div>
+
+            <!-- Module 14 -->
+            <div class="module-card">
+                <div class="module-header">
+                    <div class="module-icon advanced">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <div class="module-title">Modul 14: Machine Learning Basics</div>
+                </div>
+                <div class="module-description">
+                    R-də maşın öyrənməsinə giriş, classification, clustering və əsas ML alqoritmləri.
+                </div>
+                <div class="progress-indicator">
+                    <div class="progress-bar advanced" style="width: 100%"></div>
+                </div>
+                <div class="module-links">
+                    <a href="Modul-14.html" class="module-link">
+                        <i class="fas fa-book-open"></i> Modulun İçeriği
+                    </a>
+                </div>
+            </div>
+
+            <!-- Module 15 -->
+            <div class="module-card">
+                <div class="module-header">
+                    <div class="module-icon advanced">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <div class="module-title">Modul 15: Final Project & Best Practices</div>
+                </div>
+                <div class="module-description">
+                    Final layihə, R community, paket yaratma və professional R development təcrübələri.
+                </div>
+                <div class="progress-indicator">
+                    <div class="progress-bar advanced" style="width: 100%"></div>
+                </div>
+                <div class="module-links">
+                    <a href="Modul-15.html" class="module-link">
+                        <i class="fas fa-book-open"></i> Modulun İçeriği
+                    </a>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <h3><i class="fas fa-heart" style="color: #e74c3c;"></i> R Programming Community Azerbaijan</h3>
+            <p>Bu kurs Azərbaycan developer cəmiyyəti üçün hazırlanmışdır</p>
+            <p>Məqsəd: R proqramlaşdırma dilini ana dilimizdə öyrənmək və yaymaq</p>
+            <p><strong>📧 Əlaqə:</strong> r.programming.azerbaijani@gmail.com</p>
+            
+            <div class="social-links">
+                <a href="https://github.com/r-modules-azerbaijani" class="social-link" title="GitHub Repository">
+                    <i class="fab fa-github"></i>
+                </a>
+                <a href="#" class="social-link" title="Telegram Group">
+                    <i class="fab fa-telegram"></i>
+                </a>
+                <a href="#" class="social-link" title="LinkedIn">
+                    <i class="fab fa-linkedin"></i>
+                </a>
+                <a href="#" class="social-link" title="YouTube">
+                    <i class="fab fa-youtube"></i>
+                </a>
+            </div>
+            
+            <div style="margin-top: 20px; padding-top: 20px; border-top: 1px solid #eee;">
+                <p style="font-size: 0.9em; color: #999;">
+                    © 2024 R Programming Azerbaijan. Open Source layihədir, MIT lisenziyası altında.
+                </p>
+                <p style="font-size: 0.8em; color: #aaa; margin-top: 10px;">
+                    Son yenilənmə: <span id="last-updated"></span>
+                </p>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Set last updated date
+        document.getElementById('last-updated').textContent = new Date().toLocaleDateString('az-AZ');
+        
+        // Add smooth scrolling and hover effects
+        document.querySelectorAll('.module-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                // Add click animation
+                this.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    this.style.transform = '';
+                }, 150);
+            });
+        });
+        
+        // Add loading animation for module cards
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+        
+        // Initially hide cards and animate them in
+        document.querySelectorAll('.module-card').forEach((card, index) => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(20px)';
+            card.style.transition = `opacity 0.6s ease ${index * 0.1}s, transform 0.6s ease ${index * 0.1}s`;
+            observer.observe(card);
+        });
+    </script>
+</body>
+</html>
